@@ -1,0 +1,41 @@
+[ {
+    "model": "metierapi.comment",
+    "pk": 1,
+    "fields": {
+        "customer": 1,
+        "comment": "Beautiful!"
+    }
+},
+{
+    "model": "metierapi.comment",
+    "pk": 2,
+    "fields": {
+        "customer": 2,
+        "comment": "Pride!"    
+    }
+},
+{
+    "model": "metierapi.comment",
+    "pk": 3,
+    "fields": {
+        "customer": 3,
+        "comment": "Too bad I am not available then!" 
+    }
+},
+{
+    "model": "metierapi.comment",
+    "pk": 4,
+    "fields": {
+        "customer": 1,
+        "comment": "Insightful"
+    }
+},
+{
+    "model": "metierapi.comment.",
+    "pk": 5,
+    "fields": {
+        "customer": 2,
+        "comment": "Thank you for sharing with us."
+    }
+}
+]

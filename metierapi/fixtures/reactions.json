@@ -1,0 +1,43 @@
+[ {
+    "model": "metierapi.reaction",
+    "pk": 1,
+    "fields": {
+        "reaction": "💓"
+    }
+},
+{
+    "model": "metierapi.reaction",
+    "pk": 2,
+    "fields": {
+        "reaction": "👍"    
+    }
+},
+{
+    "model": "metierapi.reaction",
+    "pk": 3,
+    "fields": {
+        "reaction": "👎" 
+    }
+},
+{
+    "model": "metierapi.reaction",
+    "pk": 4,
+    "fields": {
+        "reaction": "😂"
+    }
+},
+{
+    "model": "metierapi.reaction.",
+    "pk": 5,
+    "fields": {
+        "reaction": "😲"
+    }
+},
+{
+    "model": "metierapi.reaction.",
+    "pk": 5,
+    "fields": {
+        "reaction": "🥹"
+    }
+}
+]

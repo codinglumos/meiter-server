@@ -1,0 +1,30 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "metier",
+            "username": "FaithC",
+            "first_name": "Faith",
+            "last_name": "Cox",
+            "email": "fnc@gmail.com",
+            "is_creator": true,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "password",
+            "username": "OliviaO",
+            "first_name": "Olivia",
+            "last_name": "Ooten",
+            "email": "opo@gmail.com",
+            "is_creator": false,
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]
