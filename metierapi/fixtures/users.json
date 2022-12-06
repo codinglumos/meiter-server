@@ -8,7 +8,7 @@
             "first_name": "Faith",
             "last_name": "Cox",
             "email": "fnc@gmail.com",
-            "is_creator": true,
+            "is_staff": true,
             "groups": [],
             "user_permissions": []
         }
@@ -22,7 +22,7 @@
             "first_name": "Olivia",
             "last_name": "Ooten",
             "email": "opo@gmail.com",
-            "is_creator": false,
+            "is_staff": false,
             "groups": [],
             "user_permissions": []
         }

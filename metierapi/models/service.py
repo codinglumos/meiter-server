@@ -10,5 +10,5 @@ class Service(models.Model):
     image = models.CharField(max_length=50, null=True, blank=True)
     body = models.CharField(max_length=500, null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
-    comment = models.ForeignKey("Comment", on_delete=models.CASCADE, related_name='service_comments')
+    comment = models.ForeignKey("Comment", on_delete=models.CASCADE, related_name='service_comments', null=True, blank=True)
     

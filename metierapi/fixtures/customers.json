@@ -1,26 +1,11 @@
 [
-    {
-        "model": "metierapi.customer",
-        "pk": 1,
-        "fields": {
-            "user": 4,
-            "address": "222 The Shire"
-        }
-    },
+   
     {
         "model": "metierapi.customer",
         "pk": 2,
         "fields": {
             "user": 2,
             "address": "The Cupboard under the Stairs, 4. Privet Drive, Little Whinging, Surrey"
-        }
-    },
-    {
-        "model": "metierapi.customer",
-        "pk": 3,
-        "fields": {
-            "user": 3,
-            "address": "12 Grimmauld Place in London"
         }
     }
 ]

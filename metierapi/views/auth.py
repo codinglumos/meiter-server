@@ -30,7 +30,7 @@ def login_user(request):
         data = {
             'valid': True,
             'token': token.key,
-            'creator': authenticated_user.is_creator
+            'staff': authenticated_user.is_staff
         }
         return Response(data)
     else:
@@ -47,6 +47,7 @@ def register_user(request):
       request -- The full HTTP request object
     '''
     account_type = request.data.get('account_type', None)
+    username = request.data.get('username', None)
     email = request.data.get('email', None)
     first_name = request.data.get('first_name', None)
     last_name = request.data.get('last_name', None)
@@ -54,6 +55,7 @@ def register_user(request):
 
     if account_type is not None \
         and email is not None\
+        and username is not None\
         and first_name is not None \
         and last_name is not None \
         and password is not None:
@@ -118,7 +120,7 @@ def register_user(request):
                 user=new_user
             )
         elif account_type == 'creator':
-            new_user.is_creator = True
+            new_user.is_staff = True
             new_user.save()
 
             account = Creator.objects.create(
@@ -131,7 +133,7 @@ def register_user(request):
         # Use the REST Framework's token generator on the new user account
         token = Token.objects.create(user=account.user)
         # Return the token to the client
-        data = { 'token': token.key, 'creator': new_user.is_creator }
+        data = { 'token': token.key, 'staff': new_user.is_staff }
         return Response(data)
 
     return Response({'message': 'You must provide email, password, first_name, last_name and account_type'}, status=status.HTTP_400_BAD_REQUEST)

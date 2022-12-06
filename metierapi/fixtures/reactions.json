@@ -27,15 +27,15 @@
     }
 },
 {
-    "model": "metierapi.reaction.",
+    "model": "metierapi.reaction",
     "pk": 5,
     "fields": {
         "reaction": "😲"
     }
 },
 {
-    "model": "metierapi.reaction.",
-    "pk": 5,
+    "model": "metierapi.reaction",
+    "pk": 6,
     "fields": {
         "reaction": "🥹"
     }
