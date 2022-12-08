@@ -104,5 +104,5 @@ class ServiceSerializer(serializers.ModelSerializer):
         model = Service
         fields = ('id', 'creator', 'is_creator',
         'service', 'publication_date', 'image', 'body', 
-        'price', 'reactions', 'comments',)
-        depth = 1
+        'price', 'reactions', 'comment',)
+        #depth = 1

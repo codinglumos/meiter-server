@@ -11,7 +11,7 @@ class FavoriteView(ViewSet):
      
     def list(self, request):
        
-        favorites = Favorite.objects.all().order_by('service').values()
+        favorites = Favorite.objects.all()
         serializer = FavoriteSerializer(favorites, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -26,3 +26,4 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ('id', 'service', 'customer',)
+        #depth = 1
