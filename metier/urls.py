@@ -3,14 +3,18 @@ from django.urls import path
 from django.conf.urls import include
 from rest_framework import routers
 from metierapi.views import register_user, login_user
-from metierapi.views import CustomerView
-from metierapi.views import CreatorView
-from metierapi.views import ServiceView
+from metierapi.views.service_view import ServiceView
+from metierapi.views.favorite_view import FavoriteView
+from metierapi.views.user_view import MetierUserView
+from metierapi.views.reaction_view import ReactionsView
+from metierapi.views.comment_view import CommentView
 
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'customers', CustomerView, 'customer')
-router.register(r'creators', CreatorView, 'creator')
+router.register(r'favorites', FavoriteView, 'favorite')
+router.register(r'users', MetierUserView, 'user')
+router.register(r'reactions', ReactionsView, 'reaction')
+router.register(r'comments', CommentView, 'comment')
 router.register(r'services', ServiceView, 'service')
 
 urlpatterns = [

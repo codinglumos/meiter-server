@@ -1,5 +1,4 @@
-from .customer import Customer
-from .creator import Creator
+from .user import MetierUser
 from .comment import Comment
 from .service import Service
 from .favorite import Favorite

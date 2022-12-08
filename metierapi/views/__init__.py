@@ -1,4 +1,6 @@
 from .service_view import ServiceView
-from .customer_view import CustomerView
 from .auth import login_user, register_user
-from .creator_view import CreatorView
+from .user_view import MetierUserView
+from .reaction_view import ReactionsView
+from .comment_view import CommentView
+from .favorite_view import FavoriteView

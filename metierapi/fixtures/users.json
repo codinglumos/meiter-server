@@ -9,6 +9,7 @@
             "last_name": "Cox",
             "email": "fnc@gmail.com",
             "is_staff": true,
+            "is_active": true,
             "groups": [],
             "user_permissions": []
         }
@@ -23,6 +24,7 @@
             "last_name": "Ooten",
             "email": "opo@gmail.com",
             "is_staff": false,
+            "is_active": true,
             "groups": [],
             "user_permissions": []
         }

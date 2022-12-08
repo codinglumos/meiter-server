@@ -1,0 +1,10 @@
+[ {
+    "model": "metierapi.favorite",
+    "pk": 1,
+    "fields": {
+        "service": 1,
+        "customer": 1
+       
+    }
+}
+]
