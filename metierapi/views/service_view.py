@@ -98,7 +98,7 @@ class CreatorSerializer(serializers.ModelSerializer):
         fields = ('id', 'full_name', )
 
 class ServiceSerializer(serializers.ModelSerializer):
-    creator= CreatorSerializer(many=False)
+    #creator= CreatorSerializer(many=False)
     #category = CategorySerializer(many=False)
     class Meta:
         model = Service
