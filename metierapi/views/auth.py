@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from metierapi.models.user import MetierUser
 from django.db import IntegrityError
 from rest_framework import status
+from metierapi.models.metier_customer import MetierCustomer
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -24,8 +26,9 @@ def login_user(request):
         }
         return Response(data)
     else:
-        data = { 'valid': False }
-        return Response(data)
+            data = { 'valid': False }
+            return Response(data)
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_user(request):
@@ -51,18 +54,20 @@ def register_user(request):
                 )
         elif account_type == 'staff':
             bio = request.data.get('bio', None)
+            profile_image = request.data.get('profile_image', None)
+
             if bio is None:
                 return Response(
-                    {'message': 'You must provide a bio for an staff'},
+                    {'message': 'You must provide a bio for a creator'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-        elif account_type == 'staff':
-            profile_image = request.data.get('profile_image', None)
-            if profile_image is None:
+
+            elif profile_image is None:
                 return Response(
-                    {'message': 'You must provide an image for an staff'},
+                    {'message': 'You must provide an image for a creator'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
+        
         else:
             return Response(
                 {'message': 'Invalid account type. Valid values are \'customer\' or \'staff\''},
@@ -83,7 +88,7 @@ def register_user(request):
             )
         account = None
         if account_type == 'customer':
-            account = MeiterCustomer.objects.create(
+            account = MetierCustomer.objects.create(
                 profile_image=request.data['profile_image'],
                 user=new_user
             )

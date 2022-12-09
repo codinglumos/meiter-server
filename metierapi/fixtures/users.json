@@ -3,7 +3,7 @@
         "model": "auth.user",
         "pk": 1,
         "fields": {
-            "password": "metier",
+            "password": "pbkdf2_sha256$390000$HaSGBeFGKEKCmwWL51YwDZ$CF5Gq8ZOye5VOoSaCYE3T8v+pPnRGSab3OFW8eY0fT8=",
             "username": "FaithC",
             "first_name": "Faith",
             "last_name": "Cox",
@@ -18,7 +18,7 @@
         "model": "auth.user",
         "pk": 2,
         "fields": {
-            "password": "password",
+            "password": "pbkdf2_sha256$390000$HaSGBeFGKEKCmwWL51YwDZ$CF5Gq8ZOye5VOoSaCYE3T8v+pPnRGSab3OFW8eY0fT8=",
             "username": "OliviaO",
             "first_name": "Olivia",
             "last_name": "Ooten",
