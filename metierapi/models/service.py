@@ -8,7 +8,7 @@ class Service(models.Model):
     body = models.CharField(max_length=500, null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
     comment = models.ForeignKey("Comment", on_delete=models.CASCADE, related_name='service_comments', null=True, blank=True)
-    publication_date = models.DateField(null=True, blank=True, auto_now=False, auto_now_add=False)
+    publication_date = models.DateField(null=True, blank=True, auto_now=True, auto_now_add=False)
 
     reactions = models.ManyToManyField("Reaction", through="ServiceReaction" )
 

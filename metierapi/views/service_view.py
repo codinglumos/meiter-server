@@ -4,7 +4,7 @@ from django.db.models import Case, When, Value, IntegerField, BooleanField
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from metierapi.models.user import MetierUser
+from metierapi.models import MetierUser, MetierCustomer
 from metierapi.models.service import Service
 from metierapi.models.reaction import Reaction
 
@@ -25,21 +25,15 @@ class ServiceView(ViewSet):
         return Response(serialized.data, status=status.HTTP_200_OK)
 
     def list(self, request):
-     
-        metier_user = MetierUser.objects.get(user=request.auth.user)
+        if request.auth.user.is_staff:  
+            metier_user = MetierUser.objects.get(user=request.auth.user)
 
-        post_view = Service.objects.annotate(
-               is_creator=Case(
-                   When(creator=metier_user,
-                        then=Value(True)),
-                   default=Value(False),
-                   output_field=BooleanField())) \
-                .all()
+        else:
+            metier_user = MetierCustomer.objects.get(user=request.auth.user)
 
-        # if "category" in request.query_params:
-        #     post_view = Post.objects.filter(category__id=request.query_params['category'])
-        
-        serialized = ServiceSerializer(post_view, many=True)
+        service_view = Service.objects.all().order_by('publication_date')
+ 
+        serialized = ServiceSerializer(service_view, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
 
     def create(self, request):
@@ -100,6 +94,7 @@ class CreatorSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     #creator= CreatorSerializer(many=False)
     #category = CategorySerializer(many=False)
+    
     class Meta:
         model = Service
         fields = ('id', 'creator', 'is_creator',
