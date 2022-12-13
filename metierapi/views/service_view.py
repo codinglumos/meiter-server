@@ -80,6 +80,7 @@ class ServiceView(ViewSet):
             reaction = Reaction.objects.get(pk=request.data["reactionId"])
             service.reactions.add(reaction)
             return Response({"Reaction has been added"}, status=status.HTTP_204_NO_CONTENT)
+            
         elif request.method == "DELETE":
             reaction = Reaction.objects.get(pk=request.data["reactionId"])
             service.reactions.remove(reaction)
