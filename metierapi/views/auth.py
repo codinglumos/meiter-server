@@ -24,8 +24,8 @@ def login_user(request):
             'token': token.key,
             'staff': authenticated_user.is_staff,
             'id':authenticated_user.id,
-            'first_name,':authenticated_user.first_name,
-            'last_name,':authenticated_user.last_name
+            'first_name':authenticated_user.first_name,
+            'last_name':authenticated_user.last_name
         }
         return Response(data)
     else:
