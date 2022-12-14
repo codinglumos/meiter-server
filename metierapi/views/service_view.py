@@ -55,7 +55,6 @@ class ServiceView(ViewSet):
        
         service = Service.objects.get(pk=pk)
         service.service = request.data["service"]
-        service.publication_date = request.data["publication_date"]
         service.image = request.data["image"]
         service.body = request.data["body"]
         service.price = request.data["price"]
@@ -80,6 +79,7 @@ class ServiceView(ViewSet):
             reaction = Reaction.objects.get(pk=request.data["reactionId"])
             service.reactions.add(reaction)
             return Response({"Reaction has been added"}, status=status.HTTP_204_NO_CONTENT)
+
         elif request.method == "DELETE":
             reaction = Reaction.objects.get(pk=request.data["reactionId"])
             service.reactions.remove(reaction)
