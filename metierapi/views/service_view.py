@@ -25,11 +25,11 @@ class ServiceView(ViewSet):
         return Response(serialized.data, status=status.HTTP_200_OK)
 
     def list(self, request):
-        if request.auth.user.is_staff:  
-            metier_user = MetierUser.objects.get(user=request.auth.user)
+        # if request.auth.user.is_staff:  
+        #     metier_user = MetierUser.objects.get(user=request.auth.user)
 
-        else:
-            metier_user = MetierCustomer.objects.get(user=request.auth.user)
+        # else:
+        #     metier_user = MetierCustomer.objects.get(user=request.auth.user)
 
         service_view = Service.objects.all().order_by('publication_date')
  
