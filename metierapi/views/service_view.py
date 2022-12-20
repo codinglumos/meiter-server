@@ -7,30 +7,20 @@ from rest_framework import serializers, status
 from metierapi.models import MetierUser, MetierCustomer
 from metierapi.models.service import Service
 from metierapi.models.reaction import Reaction
-
+from metierapi.models.comment import Comment
+from metierapi.models.service_reaction import ServiceReaction
 
 class ServiceView(ViewSet):
     def retrieve(self, request, pk):
        
-       metier_user = MetierUser.objects.get(user=request.auth.user)
-       service_view =Service.objects.get(pk=pk)
+        service_view = Service.objects.get(pk=pk)
         
-       service_view.is_creator = False
-
-       if service_view.creator == metier_user:
-        service_view.is_creator = True
-
-
+    
         serialized =ServiceSerializer(service_view, context={'request': request})
         return Response(serialized.data, status=status.HTTP_200_OK)
 
     def list(self, request):
-        # if request.auth.user.is_staff:  
-        #     metier_user = MetierUser.objects.get(user=request.auth.user)
-
-        # else:
-        #     metier_user = MetierCustomer.objects.get(user=request.auth.user)
-
+       
         service_view = Service.objects.all().order_by('publication_date')
  
         serialized = ServiceSerializer(service_view, many=True)
@@ -52,16 +42,17 @@ class ServiceView(ViewSet):
         return Response(serializer.data)
 
     def update(self, request, pk):
-       
+        
+
         service = Service.objects.get(pk=pk)
         service.service = request.data["service"]
         service.image = request.data["image"]
         service.body = request.data["body"]
         service.price = request.data["price"]
-
-        # category = Catergory.objects.get(pk=request.data["category"])
-        # post.category = request.data["category"]
-        
+        reaction = ReactionsSerializer(request.data['reactions'])
+        service.reactions.set(reaction)
+        comment = Comment.objects.get(pk=request.data['comment'])
+        service.comment = comment
         service.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)  
@@ -71,19 +62,20 @@ class ServiceView(ViewSet):
             service.delete()
             return Response(None, status=status.HTTP_204_NO_CONTENT)
 
-    @action(methods=['post', 'delete'], detail=True)
-    def servicereaction(self, request, pk=None):
+    # @action(methods=['post', 'delete'], detail=True)
 
-        service = Service.objects.get(pk=pk)
-        if request.method == "POST":
-            reaction = Reaction.objects.get(pk=request.data["reactionId"])
-            service.reactions.add(reaction)
-            return Response({"Reaction has been added"}, status=status.HTTP_204_NO_CONTENT)
+    # def servicereaction(self, request, pk=None):
 
-        elif request.method == "DELETE":
-            reaction = Reaction.objects.get(pk=request.data["reactionId"])
-            service.reactions.remove(reaction)
-            return Response({"Reaction has been removed"}, status=status.HTTP_204_NO_CONTENT)
+    #     service = Service.objects.get(pk=pk)
+    #     if request.method == "POST":
+    #         reaction = Reaction.objects.get(pk=request.data["reactionId"])
+    #         service.reactions.add(reaction)
+    #         return Response({"Reaction has been added"}, status=status.HTTP_204_NO_CONTENT)
+
+    #     elif request.method == "DELETE":
+    #         reaction = Reaction.objects.get(pk=request.data["reactionId"])
+    #         service.reactions.delete(reaction)
+    #         return Response({"Reaction has been removed"}, status=status.HTTP_204_NO_CONTENT)
 
 
 class CreatorSerializer(serializers.ModelSerializer):
@@ -91,10 +83,28 @@ class CreatorSerializer(serializers.ModelSerializer):
         model = MetierUser
         fields = ('id', 'full_name', )
 
+# class CommentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = MetierUser
+#         fields = ('id', 'customer', 'comment', 'created_on', )
+
+class ReactionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceReaction
+        fields = ('id', 'reaction', 'customer', 'service',)
+
 class ServiceSerializer(serializers.ModelSerializer):
-    #creator= CreatorSerializer(many=False)
-    #category = CategorySerializer(many=False)
-    
+    creator= CreatorSerializer(many=False)
+    # comment = CommentSerializer(many=False)
+    reactions = ReactionsSerializer(many=True)
+
+    def create_or_update_reactions(self, reactions):
+        reaction_ids = []
+        for reaction in reactions:
+            reactions_instance, created = ServiceReaction.objects.update_or_create(pk=reaction.get('id'), default=reaction)
+            reaction_ids.append(reactions_instance.pk)
+        return reaction_ids
+
     class Meta:
         model = Service
         fields = ('id', 'creator', 'is_creator',
