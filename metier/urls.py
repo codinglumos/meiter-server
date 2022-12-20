@@ -8,11 +8,12 @@ from metierapi.views.favorite_view import FavoriteView
 from metierapi.views.user_view import MetierUserView
 from metierapi.views.reaction_view import ReactionsView
 from metierapi.views.comment_view import CommentView
-
+from metierapi.views.metier_customerview import MetierCustomerView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'favorites', FavoriteView, 'favorite')
-router.register(r'users', MetierUserView, 'user')
+router.register(r'metiercreators', MetierUserView, 'metiercreator')
+router.register(r'metiercustomers', MetierCustomerView, 'metiercustomer')
 router.register(r'reactions', ReactionsView, 'reaction')
 router.register(r'comments', CommentView, 'comment')
 router.register(r'services', ServiceView, 'service')
