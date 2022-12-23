@@ -49,10 +49,10 @@ class ServiceView(ViewSet):
         service.image = request.data["image"]
         service.body = request.data["body"]
         service.price = request.data["price"]
-        reaction = ReactionsSerializer(request.data['reactions'])
-        service.reactions.set(reaction)
-        comment = Comment.objects.get(pk=request.data['comment'])
-        service.comment = comment
+        # reaction = ReactionsSerializer(request.data['reactions'])
+        # service.reactions.set(reaction)
+        # comment = Comment.objects.get(pk=request.data['comment'])
+        # service.comment = comment
         service.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)  
