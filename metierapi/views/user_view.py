@@ -31,4 +31,4 @@ class MetierUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MetierUser
         fields = ('id', 'full_name','bio','profile_image', 'user',)
-        # depth=1
+        #depth = 1
