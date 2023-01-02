@@ -23,4 +23,6 @@ urlpatterns = [
     path('login', login_user),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('services/<int:pk>/delete/', ServiceView.as_view({'delete': 'destroy'}), name='service-delete'),
+    path('services/<int:pk>/update/', ServiceView.as_view({'patch': 'update'}), name='service-update'),
 ]
