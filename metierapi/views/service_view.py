@@ -68,7 +68,8 @@ class ServiceView(ViewSet):
 class CreatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = MetierUser
-        fields = ('id', 'full_name', )
+        fields = ('id', 'full_name','bio','profile_image', 'user',)
+        depth = 1
 
 class ReactionsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -78,23 +79,25 @@ class ReactionsSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     creator = CreatorSerializer()
     reactions = ReactionsSerializer(many=True)
-    delete_url = serializers.SerializerMethodField()
-    edit_url = serializers.SerializerMethodField()
+    # delete_url = serializers.SerializerMethodField()
+    # edit_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Service
-        fields = ('id', 'creator', 'service', 'publication_date', 'image', 'body', 'price', 'reactions', 'delete_url', 'edit_url',)
+        fields = ('id', 'creator', 'service', 'publication_date', 'image', 'body', 'price', 'reactions',)
         depth = 2
 
-    def get_delete_url(self, obj):
-         request = self.context.get('request')
-         if obj.creator == request.user:
-          return reverse('service-delete', kwargs={'pk': obj.pk})
-         return ''
+    # def get_delete_url(self, obj):
+    #     request = self.context.get('request')
+    #     authenticated_username = request.auth.user.username
+    #     service_creator_username = obj.creator.user.username
+    #     if authenticated_username == service_creator_username:
+    #         return reverse('service-delete', kwargs={'pk': obj.pk})
+    #     return ''
 
-    def get_edit_url(self, obj):
-         request = self.context.get('request')
-         if obj.creator == request.user:
-            return reverse("service-update", kwargs={"pk": obj.pk})
-         return ''
+    # def get_edit_url(self, obj):
+    #      request = self.context.get('request')
+    #      if obj.creator == request.user:
+    #         return reverse("service-update", kwargs={"pk": obj.pk})
+    #      return ''
 

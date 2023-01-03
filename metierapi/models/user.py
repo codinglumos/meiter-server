@@ -7,6 +7,7 @@ class MetierUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=50)
     profile_image = models.CharField(max_length=50, null=True, blank=True)
+    
 
     @property
     def full_name(self):

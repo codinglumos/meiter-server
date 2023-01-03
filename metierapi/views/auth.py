@@ -25,7 +25,8 @@ def login_user(request):
             'staff': authenticated_user.is_staff,
             'id':authenticated_user.id,
             'first_name':authenticated_user.first_name,
-            'last_name':authenticated_user.last_name
+            'last_name':authenticated_user.last_name, 
+            'username': authenticated_user.username,
         }
         return Response(data)
     else:
