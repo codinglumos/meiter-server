@@ -12,6 +12,18 @@ from metierapi.models.comment import Comment
 from metierapi.models.service_reaction import ServiceReaction
 
 class ServiceView(ViewSet):
+    @action(methods=['post', 'delete'], detail=True)
+    def reaction(self, request, pk):
+        if request.method == "POST":
+            service = Service.objects.get(pk=pk)
+            reaction = request.query_params.get('reaction')
+            customer = MetierUser.objects.get(user=request.auth.user)
+            service_reaction = ServiceReaction.objects.create(service=service, reaction=reaction, customer=customer)
+            serializer = ReactionsSerializer(service_reaction)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        elif request.method == "DELETE":
+            pass
+
     def retrieve(self, request, pk):
        
         service_view = Service.objects.get(pk=pk)
@@ -42,6 +54,7 @@ class ServiceView(ViewSet):
             image=request.data["image"],
             body=request.data["body"],
             price=request.data["price"]
+            # reaction=request.data["reaction"]
         )
         serializer = ServiceSerializer(service)
         return Response(serializer.data)
@@ -53,9 +66,7 @@ class ServiceView(ViewSet):
         service.image = request.data["image"]
         service.body = request.data["body"]
         service.price = request.data["price"]
-        # service.reactions.set = request.data['reactions']
-        # comment = Comment.objects.get(pk=request.data['comment'])
-        # service.comment = comment
+        service.reactions.set(request.data['reactions'])
         service.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)  
@@ -79,25 +90,25 @@ class ReactionsSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     creator = CreatorSerializer()
     reactions = ReactionsSerializer(many=True)
-    # delete_url = serializers.SerializerMethodField()
-    # edit_url = serializers.SerializerMethodField()
+    delete_url = serializers.SerializerMethodField()
+    edit_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Service
-        fields = ('id', 'creator', 'service', 'publication_date', 'image', 'body', 'price', 'reactions',)
+        fields = ('id', 'creator', 'service', 'publication_date', 'image', 'body', 'price', 'reactions', 'delete_url', 'edit_url',)
         depth = 2
 
-    # def get_delete_url(self, obj):
-    #     request = self.context.get('request')
-    #     authenticated_username = request.auth.user.username
-    #     service_creator_username = obj.creator.user.username
-    #     if authenticated_username == service_creator_username:
-    #         return reverse('service-delete', kwargs={'pk': obj.pk})
-    #     return ''
+    def get_delete_url(self, obj):
+        request = self.context.get('request')
+        authenticated_username = request.auth.user.username
+        service_creator_username = obj.creator.user.username
+        if authenticated_username == service_creator_username:
+            return reverse('service-delete', kwargs={'pk': obj.pk})
+        return ''
 
-    # def get_edit_url(self, obj):
-    #      request = self.context.get('request')
-    #      if obj.creator == request.user:
-    #         return reverse("service-update", kwargs={"pk": obj.pk})
-    #      return ''
+    def get_edit_url(self, obj):
+         request = self.context.get('request')
+         if obj.creator == request.user:
+            return reverse("service-update", kwargs={"pk": obj.pk})
+         return ''
 

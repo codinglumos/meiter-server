@@ -19,3 +19,4 @@ class Service(models.Model):
     @is_creator.setter
     def is_creator(self, value):
         self.__creator = value
+

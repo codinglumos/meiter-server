@@ -9,6 +9,7 @@ from metierapi.views.user_view import MetierUserView
 from metierapi.views.reaction_view import ReactionsView
 from metierapi.views.comment_view import CommentView
 from metierapi.views.metier_customerview import MetierCustomerView
+from metierapi import views
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'favorites', FavoriteView, 'favorite')
@@ -25,4 +26,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('services/<int:pk>/delete/', ServiceView.as_view({'delete': 'destroy'}), name='service-delete'),
     path('services/<int:pk>/update/', ServiceView.as_view({'patch': 'update'}), name='service-update'),
+    path('services/', views.ServiceView.as_view({'get': 'list', 'post': 'create'}), name='service-list'),
+    path('services/<int:pk>/', views.ServiceView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='service-detail'),
+    path('services/<int:pk>/create_reaction/', views.ServiceView.as_view({'post': 'create_reaction'}), name='service-create-reaction'),
 ]
