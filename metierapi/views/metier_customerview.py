@@ -22,4 +22,3 @@ class MetierCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = MetierCustomer
         fields = ('id', 'full_name', 'profile_image', 'user',)
-        #depth = 1

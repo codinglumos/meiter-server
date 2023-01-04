@@ -25,8 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('services/<int:pk>/delete/', ServiceView.as_view({'delete': 'destroy'}), name='service-delete'),
-    path('services/<int:pk>/update/', ServiceView.as_view({'patch': 'update'}), name='service-update'),
-    path('services/', views.ServiceView.as_view({'get': 'list', 'post': 'create'}), name='service-list'),
-    path('services/<int:pk>/', views.ServiceView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='service-detail'),
-    path('services/<int:pk>/create_reaction/', views.ServiceView.as_view({'post': 'create_reaction'}), name='service-create-reaction'),
+    path('services/<int:pk>/update/', ServiceView.as_view({'patch': 'update'}), name='service-update')
 ]

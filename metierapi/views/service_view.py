@@ -54,7 +54,6 @@ class ServiceView(ViewSet):
             image=request.data["image"],
             body=request.data["body"],
             price=request.data["price"]
-            # reaction=request.data["reaction"]
         )
         serializer = ServiceSerializer(service)
         return Response(serializer.data)
@@ -66,7 +65,6 @@ class ServiceView(ViewSet):
         service.image = request.data["image"]
         service.body = request.data["body"]
         service.price = request.data["price"]
-        # service.reactions.set(request.data['reactions'])
         service.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)  

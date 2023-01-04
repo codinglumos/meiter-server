@@ -26,4 +26,3 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ('id', 'service', 'customer',)
-        #depth = 1
