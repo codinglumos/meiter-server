@@ -66,7 +66,7 @@ class ServiceView(ViewSet):
         service.image = request.data["image"]
         service.body = request.data["body"]
         service.price = request.data["price"]
-        service.reactions.set(request.data['reactions'])
+        # service.reactions.set(request.data['reactions'])
         service.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)  
