@@ -16,12 +16,18 @@ class ServiceView(ViewSet):
     def reaction(self, request, pk):
         if request.method == "POST":
             service = Service.objects.get(pk=pk)
-            reaction = request.query_params.get('reaction')
+            reaction_id = request.query_params.get('reaction')
+            reaction = Reaction.objects.get(pk=reaction_id)
             service_reaction = ServiceReaction.objects.create(service=service, reaction=reaction, customer=request.auth.user)
             serializer = ReactionsSerializer(service_reaction)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         elif request.method == "DELETE":
-            pass
+            service = Service.objects.get(pk=pk)
+            reaction_id = request.query_params.get('reaction')
+            reaction = Reaction.objects.get(pk=reaction_id)
+            service_reactions = ServiceReaction.objects.filter(service=service, reaction=reaction, customer=request.auth.user)
+            service_reactions.delete()
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
 
     def retrieve(self, request, pk):
        
@@ -81,7 +87,7 @@ class CreatorSerializer(serializers.ModelSerializer):
 class ReactionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceReaction
-        fields = ('id', 'reaction', 'customer', 'service',)
+        fields = ('id', 'reaction_id', 'customer_id', 'service_id',)
 
 class ServiceSerializer(serializers.ModelSerializer):
     creator = CreatorSerializer()
