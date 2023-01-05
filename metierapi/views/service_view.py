@@ -17,8 +17,7 @@ class ServiceView(ViewSet):
         if request.method == "POST":
             service = Service.objects.get(pk=pk)
             reaction = request.query_params.get('reaction')
-            customer = MetierUser.objects.get(user=request.auth.user)
-            service_reaction = ServiceReaction.objects.create(service=service, reaction=reaction, customer=customer)
+            service_reaction = ServiceReaction.objects.create(service=service, reaction=reaction, customer=request.auth.user)
             serializer = ReactionsSerializer(service_reaction)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         elif request.method == "DELETE":
@@ -33,15 +32,14 @@ class ServiceView(ViewSet):
 
     def list(self, request):
 
-     if "myServices" in request.query_params:
-      user = MetierUser.objects.get(user=request.auth.user)
-      service_view = Service.objects.all().order_by('publication_date').filter(creator=user)
-     else:
-      service_view = Service.objects.all().order_by('publication_date')
+      if "myServices" in request.query_params:
+        user = MetierUser.objects.get(user=request.auth.user)
+        service_view = Service.objects.all().order_by('publication_date').filter(creator=user)
+      else:
+        service_view = Service.objects.all().order_by('publication_date')
 
-
-     serialized = ServiceSerializer(service_view, many=True, context={'request': request})
-     return Response(serialized.data, status=status.HTTP_200_OK)
+      serialized = ServiceSerializer(service_view, many=True, context={'request': request})
+      return Response(serialized.data, status=status.HTTP_200_OK)
 
 
     def create(self, request):
