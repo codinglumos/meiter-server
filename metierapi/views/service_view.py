@@ -40,9 +40,9 @@ class ServiceView(ViewSet):
 
       if "myServices" in request.query_params:
         user = MetierUser.objects.get(user=request.auth.user)
-        service_view = Service.objects.all().order_by('publication_date').filter(creator=user)
+        service_view = Service.objects.all().order_by('-publication_date').filter(creator=user)
       else:
-        service_view = Service.objects.all().order_by('publication_date')
+        service_view = Service.objects.all().order_by('-publication_date')
 
       serialized = ServiceSerializer(service_view, many=True, context={'request': request})
       return Response(serialized.data, status=status.HTTP_200_OK)
